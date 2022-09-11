@@ -1,5 +1,5 @@
-import Price  from "./price";
-import Image from "./image";
+import Price  from "../interfaces/iPrice";
+import Image from "../interfaces/iImage";
 
 export default class Product {
   constructor(
