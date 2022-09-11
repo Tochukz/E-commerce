@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../AppContext';
 
 type CartItemProps = {
   item: any, 
-  onUpdateCartQty: (lineItemId: string, quantity: number) => void,
-  onRemoveItem: (itemId: string) => void
 }
  
-const CartItem: React.FC<CartItemProps>  = function({ item, onUpdateCartQty, onRemoveItem }) {
+const CartItem: React.FC<CartItemProps>  = function({ item }) { // onUpdateCartQty, onRemoveItem
+  const appContext = useContext(AppContext);
 
   return (
     <tr>
@@ -19,13 +19,13 @@ const CartItem: React.FC<CartItemProps>  = function({ item, onUpdateCartQty, onR
       <td>
         <button type="button" 
                 className="btn btn-sm btn-primary"
-                onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>-</button>
+                onClick={() => appContext.updateCartQty(item.id, item.quantity - 1)}>-</button>
         {' '}
         <span>{item.quantity}</span>
         {' '}
         <button type="button" 
                 className="btn btn-sm btn-primary"
-                onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>+</button>
+                onClick={() => appContext.updateCartQty(item.id, item.quantity + 1)}>+</button>
       </td>
       <td>
         <div>{item.line_total.formatted_with_symbol}</div>
@@ -34,7 +34,7 @@ const CartItem: React.FC<CartItemProps>  = function({ item, onUpdateCartQty, onR
       <button
         type="button" 
         className="btn btn-sm btn-danger"
-        onClick={() => onRemoveItem(item.id)}>Remove</button>
+        onClick={() => appContext.removeFromCart(item.id)}>Remove</button>
       </td>
     </tr>
   )

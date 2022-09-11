@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { stripHtml } from 'string-strip-html';
+import AppContext from "../AppContext";
 import Product from "../models/product";
 
 type ProductItemProp = {
   product: Product,
-  onAddToCart: Function,
 }
 
-const ProductItem: React.FC<ProductItemProp> = function({ product, onAddToCart }) {
+const ProductItem: React.FC<ProductItemProp> = function({ product }) {
+
+  const appContext = useContext(AppContext);
 
   const addToCart = () => {
-    onAddToCart(product.id, 1);
+    appContext.addToCart(product.id, 1);
   }
 
   return (

@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import ICart from "../interfaces/iCart";
+import React, { useContext, useState } from 'react';
+import AppContext from '../AppContext';
 import Cart from './Cart';
 
 type CartNavProps = {
-  cart: ICart,
-  onUpdateCartQty: (lineItemId: string, quantity: number) => void,
-  onEmptyCart: () => void,
-  onRemoveItem: (itemId: string) => void
 }
 
-const CartNav: React.FC<CartNavProps> = ({ cart, onRemoveItem, onUpdateCartQty, onEmptyCart}) => {
+const CartNav: React.FC<CartNavProps> = () => { 
   const [isCartVisible, setCartVisible] = useState(false);
+  
+  const appContext = useContext(AppContext);
+  const cart = appContext.cart;
   
   return (
     <div className="nav mb-4">
@@ -29,12 +28,7 @@ const CartNav: React.FC<CartNavProps> = ({ cart, onRemoveItem, onUpdateCartQty, 
       </div>
       <div>
         { isCartVisible &&
-          <Cart
-            cart={cart}
-            onUpdateCartQty={onUpdateCartQty}
-            onRemoveItem={onRemoveItem}
-            onEmptyCart={onEmptyCart}
-          />
+          <Cart />
         }  
       </div>
     </div>

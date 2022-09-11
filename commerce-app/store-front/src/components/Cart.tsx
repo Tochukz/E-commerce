@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../AppContext';
 import ICart from '../interfaces/iCart';
 import CartItem from './CartItem';
 
 type CartProp = {
-  cart: ICart,
-  onUpdateCartQty: (lineIteπmId: string, quantity: number) => void,
-  onRemoveItem: (itemId: string) => void,
-  onEmptyCart: () => void,
 }
 
-const Cart: React.FC<CartProp>  = function({ cart, onUpdateCartQty, onRemoveItem, onEmptyCart}) {
-
+const Cart: React.FC<CartProp>  = function() { 
+  const appContext = useContext(AppContext);
+  const cart = appContext.cart;
+  
   return (
     <div>
       <h4>&nbsp;Shopping Cart</h4>
@@ -31,11 +30,7 @@ const Cart: React.FC<CartProp>  = function({ cart, onUpdateCartQty, onRemoveItem
             </thead>
             <tbody>
               { cart.line_items.map((lineItem) => 
-                <CartItem
-                  item={lineItem}
-                  onUpdateCartQty={onUpdateCartQty}
-                  onRemoveItem={onRemoveItem}
-                />
+                <CartItem item={lineItem} />
               )}
               <tr>
                 <td colSpan={3}>
@@ -46,7 +41,7 @@ const Cart: React.FC<CartProp>  = function({ cart, onUpdateCartQty, onRemoveItem
             </tbody>
           </table>
           <div className="text-right">
-            <button className="btn btn-sm btn-danger" onClick={onEmptyCart}>Empty cart</button>
+            <button className="btn btn-sm btn-danger" onClick={appContext.emptyCart}>Empty cart</button>
             {' '}
             <button className="btn btn-sm btn-success">Checkout</button> 
           </div>

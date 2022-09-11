@@ -6,8 +6,10 @@ import ProductList from './components/ProductList';
 import ICart from './interfaces/iCart';
 import CartNav from './components/CartNav';
 import { createCart } from './helpers/factory';
+import AppContext from './AppContext';
 
 import './App.scss';
+
 const App = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const defaultCart = createCart();
@@ -69,11 +71,10 @@ const App = () => {
   return (
     <div className="container-fluid">
       <h2>CommerceJS ECommerce</h2>
-      <CartNav cart={cart} 
-               onUpdateCartQty={updateCartQty} 
-               onRemoveItem={removeFromCart} 
-               onEmptyCart={emptyCart} />
-      <ProductList products={products} onAddToCart={addToCart} />
+      <AppContext.Provider value={{ cart, addToCart, updateCartQty, removeFromCart, emptyCart }}>
+        <CartNav />
+        <ProductList products={products} />
+      </AppContext.Provider>
     </div>
   );
 };
